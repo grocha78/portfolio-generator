@@ -1,9 +1,9 @@
 const { truncate } = require('fs');
 const inquirer = require('inquirer');
 
-// const fs = require('fs');
+const fs = require('fs');
 
-// const generatePage = require('./src/page-template')
+const generatePage = require('./src/page-template')
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -140,13 +140,13 @@ if (!portfolioData.projects) {
 promptUser()
 .then(promptProject)
 .then(portfolioData => {
-    console.log(portfolioData);
+
+const pageHTML = generatePage(portfolioData);
+
+fs.writeFile('./index.html', pageHTML, err => {
+if (err) throw new Error(err);
+
+console.log('Page created! Checkout index.html to see the output!');
 });
-
-// const pageHTML = generatePage(name, github);
-
-// fs.writeFile('./index.html', pageHTML, err => {
-// if (err) throw new Error(err);
-
-// console.log('Portfolio complete! Checkout index.html to see the output!');
-// });
+ 
+});
